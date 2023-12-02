@@ -1,28 +1,109 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Nav , Navbar , Container, Badge } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
-
+import React from "react";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import '../Assets/style.css'
+import { useState } from "react";
+import { useEffect } from "react";
 function Header() {
-  const wishlist = useSelector((state)=>state.wishlistReducer)
-  const cart = useSelector((state)=>state.cartReducer)
+  const wishlist = useSelector((state) => state.wishlistReducer);
+  const cart = useSelector((state) => state.cartReducer);
+  const [show, setShow] = useState(false);
+  useEffect(() =>
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 600) {
+        setShow(true);
+      } else {
+        setShow(false);
+      }
+    })
+  );
   return (
-    <div>
-        <Navbar style={{zIndex:'1'}} expand="lg" className="bg-primary text-light position-fixed top-0 w-100 mb-5">
-      <Container>
-        <Navbar.Brand><Link to={'/'} style={{textDecoration:'none',color:'white',fontWeight:'bold'}}><i className="fa-solid fa-truck-fast me-2" style={{color: '#ffffff'}}></i>E Kart</Link></Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            <Nav.Link className=''><Link to={'/wishlist'} style={{textDecoration:'none',color:'white'}}><i className='fa-solid fa-heart text-danger me-2'></i>Wishlist <Badge bg="light">{wishlist.length}</Badge>
-            </Link></Nav.Link>
-            <Nav.Link className=''><Link to={'/cart'} style={{textDecoration:'none',color:'white'}}><i className='fa-solid fa-cart-shopping text-warning me-2'></i>Cart <Badge className='ms-2' bg="light">{cart.length}</Badge></Link></Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
-    </div>
-  )
+    <>
+      <Navbar fixed="top" expand="lg"  className={`${show && 'nav-white'}`}>
+        <Container>
+          <Navbar.Brand>
+            <i className="fa-brands fa-cotton-bureau me-1"></i>
+            <Link
+              to={"/"}
+              style={{
+                textDecoration: "none",
+                color: "black",
+              }}
+            >
+              Tee Rex
+            </Link>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbarSupportedContent" />
+
+          <Navbar.Collapse id="navbarSupportedContent">
+            <Nav className="ms-auto mb-2 mb-lg-0">
+              <Nav.Item>
+                <Nav.Link className="active">
+                  <Link
+                    to={"/"}
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                  >
+                    {" "}
+                    HOME
+                  </Link>
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link>
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                    to={"/wishlist"}
+                  >
+                    WISHLIST
+                  </Link>
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                {wishlist.length > 0 && (
+                  <p
+                    className="bg-transparent text-danger"
+                    style={{ fontSize: "20px" }}
+                  >
+                    {wishlist.length}
+                  </p>
+                )}
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link>
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                    to={"/cart"}
+                  >
+                    CART
+                  </Link>
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                {cart.length > 0 && (
+                  <p
+                    className="bg-transparent text-danger"
+                    style={{ fontSize: "20px" }}
+                  >
+                    {cart.length}
+                  </p>
+                )}
+              </Nav.Item>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </>
+  );
 }
 
-export default Header
+export default Header;

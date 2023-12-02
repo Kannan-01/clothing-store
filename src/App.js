@@ -5,6 +5,7 @@ import Home from './Pages/Home'
 import Wishlist from './Pages/WishList'
 import Header from './Components/Header';
 import Footer from './Components/Footer'
+import Checkout from './Pages/Checkout';
 function App() {
   return (
     <>
@@ -13,6 +14,7 @@ function App() {
       <Route path='/' element={<Home/>}/>
       <Route path='/cart' element={<Cart/>}/>
       <Route path='/wishlist' element={<Wishlist/>}/>
+      <Route path='/checkout' element={<Checkout/>}/>
     </Routes>
     <Footer/>
     </>
